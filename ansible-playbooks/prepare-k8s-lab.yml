@@ -67,3 +67,14 @@
         pip:
           name: docker
 
+- name: install nginx on boreder machine
+  hosts: nginx-revers-proxy
+  tasks:
+
+      - name: install nginx
+        apt: pkg=nginx state=latest
+      - name: Get zabbix enable-autostart
+        ansible.builtin.systemd:
+        name: nginx
+        enabled: true
+        masked: no

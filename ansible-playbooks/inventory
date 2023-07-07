@@ -1,0 +1,12 @@
+#host.domain.local ansible_ssh_host=XXX.XXX.XXX.XXX ansible_ssh_user=root
+#host.domain.local ansible_ssh_host=XXX.XXX.XXX.XXX ansible_ssh_user=root
+#host.domain.local ansible_ssh_host=XXX.XXX.XXX.XXX ansible_ssh_user=root
+
+
+
+
+[docker-install]
+#host.domain.local
+
+[nginx-revers-proxy]
+#host.domain.local
