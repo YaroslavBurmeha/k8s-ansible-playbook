@@ -24,9 +24,20 @@
         enabled: true
         masked: no
 - name: Install pre-reqs for Docker and Ansible
-      apt: name={{ item }} state=latest update_cache=yes
-      loop: [ 'apt-transport-https', 'ca-certificates', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
-
+  hosts: docker-install
+  tasks:
+      - name: install apt-transport-https
+        apt: pkg=apt-transport-https state=latest
+      - name: install ca-certificates
+        apt: pkg=ca-certificates
+      - name: install software-properties-common
+        apt: pkg=software-properties-common
+      - name: Install python3-pip
+        apt: pkg=python3-pip state=latest
+      - name: Install virtualenv
+        apt: pkg=virtualenv state=latest
+      - name: Install python3-setuptools
+        apt: pkg=python3-setuptools state=latest
     - name: Add the GPG key for Docker
       shell: 'curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg'
 
