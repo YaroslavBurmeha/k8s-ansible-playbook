@@ -16,10 +16,10 @@
   tasks:
     - name: Install zabbix-agent
       apt: pkg=zabbix-agent state=latest
-    - name: Get zabbix reload
-      ansible.builtin.systemd:
-        name: zabbix-agent
-        state: reloaded
+#    - name: Get zabbix reload
+#      ansible.builtin.systemd:
+#        name: zabbix-agent
+#        state: reloaded
     - name: Get zabbix enable-autostart
       ansible.builtin.systemd:
         name: zabbix-agent
