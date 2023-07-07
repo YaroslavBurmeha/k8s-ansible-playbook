@@ -1,40 +1,42 @@
 ---
 # OS Debian 11
-#- name: Install minimal progs # название таска
-#  hosts: all # выбор груп хостов
-#  tasks: # перечисление заданий
-#    - name: Install sudo # именование задания
-#      apt: pkg=sudo state=latest # apt(выбор пакетного менеджера) pkg(именование конкретного пакета) state(выбор конечного состояние пакета)
-#    - name: Install gpg
-#      apt: pkg=pgp state=latest
-#    - name: Install wget
-#      apt: pkg=wget state=latest
-#    - name: Install GIT
-#      apt: pkg=git state=latest
+- name: Install minimal progs # название таска
+  hosts: all # выбор груп хостов
+  tasks: # перечисление заданий
+    - name: Install sudo # именование задания
+      apt: pkg=sudo state=latest # apt(выбор пакетного менеджера) pkg(именование конкретного пакета) state(выбор конечного состояние пакета)
+    - name: Install gpg
+      apt: pkg=pgp state=latest
+    - name: Install wget
+      apt: pkg=wget state=latest
+    - name: Install GIT
+      apt: pkg=git state=latest
+    - name: install curl
+      apt: pkg=curl state=latest
 - name: Install Zabbix-agent
   hosts: all
   tasks:
     - name: Install zabbix-agent
       apt: pkg=zabbix-agent state=latest
-#    - name: Get zabbix reload
-#      ansible.builtin.systemd:
-#        name: zabbix-agent
-#        state: reloaded
     - name: Get zabbix enable-autostart
       ansible.builtin.systemd:
         name: zabbix-agent
         enabled: true
         masked: no
-#- name: Install docker in product servers
-#  host: docker-install
-#  tasks:
-#    - name: Install apt-transport-https
-#      ansible.builtin.apt:
-#        name:
-#          - apt-transport-https
-#          - ca-certificates
-#          - gnupg
-#        state: latest
-#        update_cache: true
-#    - name: Add signing key
-#      url: "https://download.docker.com/linux/debian/gpg"
+- name: Install pre-reqs for Docker and Ansible
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'apt-transport-https', 'ca-certificates', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+
+    - name: Add the GPG key for Docker
+      shell: 'curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg'
+
+    - name: Add the repository to fetch the docker package
+      shell: 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bullseye stable" | tee /etc/apt/sources.list.d/docker.list'
+
+    - name: Update source list and then install docker
+      apt: update_cache=yes name=docker-ce state=latest
+
+    - name: Install the Docker module for Python, required by ansible
+      pip:
+        name: docker
+
