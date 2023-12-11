@@ -74,7 +74,7 @@
       - name: install nginx
         apt: pkg=nginx state=latest
       
-- name: get autostart dockerd
+- name: get autostart docker
   hosts: docker-install
   tasks:
       - name: Get docker enable-autostart
