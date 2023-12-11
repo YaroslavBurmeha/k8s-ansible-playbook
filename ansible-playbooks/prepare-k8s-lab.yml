@@ -55,7 +55,7 @@
         apt: pkg=python3-setuptools state=latest
      
       - name: Add the GPG key for Docker 
-        shell: 'curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -'
+        shell: 'curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor | tee /usr/share/keyrings/docker-archive-keyring.gpg'
 
       - name: Add the repository to fetch the docker package
         shell: 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bullseye stable" | tee /etc/apt/sources.list.d/docker.list'
