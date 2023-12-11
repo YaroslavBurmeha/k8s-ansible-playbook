@@ -74,8 +74,11 @@
       - name: install nginx
         apt: pkg=nginx state=latest
       
-      - name: Get zabbix enable-autostart
+- name: get autostart dockerd
+  hosts: docker-install
+  tasks:
+      - name: Get docker enable-autostart
         ansible.builtin.systemd:
-          name: nginx
+          name: docker
           enabled: true
           masked: no
