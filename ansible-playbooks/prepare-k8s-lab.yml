@@ -66,17 +66,7 @@
       - name: Install the Docker module for Python, required by ansible
         pip:
           name: docker
-
-- name: install nginx on boreder machine
-  hosts: nginx-revers-proxy
-  tasks:
-
-      - name: install nginx
-        apt: pkg=nginx state=latest
-      
-- name: get autostart docker
-  hosts: docker-install
-  tasks:
+          
       - name: Get docker enable-autostart
         ansible.builtin.systemd:
           name: docker
