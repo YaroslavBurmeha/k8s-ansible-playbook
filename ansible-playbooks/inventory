@@ -7,6 +7,3 @@
 
 [docker-install]
 #host.domain.local
-
-[nginx-revers-proxy]
-#host.domain.local
