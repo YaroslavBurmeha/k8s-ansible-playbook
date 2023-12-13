@@ -9,3 +9,4 @@
 Затем перейдите в дерикторию k8s-ansible-playbook/ansible-playbooks и запустите команду "ansible-playbook prepare-k8s-lab.yml -i inventory"
 
 Данный скрипт работает на версии ansible 2.10.8
+На нодах установлен debian 11
